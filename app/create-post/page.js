@@ -23,6 +23,13 @@ const controls = [
 			{ label: 'Mumbai, City of Dreams', value: 'mumbai' },
 			{ label: 'Pune, Maharashtra', value: 'pune' }
 		],
+	},
+	{
+		name: 'post_picture',
+		type: 'file',
+		label: 'Upload Picture',
+		accept: '*',
+		multiple: true
 	}
 ]
 

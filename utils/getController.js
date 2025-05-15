@@ -1,4 +1,4 @@
-import { InputController, SelectController, RadioController } from "@/components/form"
+import { InputController, SelectController, RadioController, UploadController } from "@/components/form"
 
 export const getController = (type) => {
 	switch (type) {
@@ -8,6 +8,8 @@ export const getController = (type) => {
 			return SelectController;
 		case 'radio':
 			return RadioController;
+		case 'file':
+			return UploadController;
 		default:
 			return InputController;
 	}

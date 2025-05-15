@@ -1,49 +1,63 @@
 import React from 'react'
 import { Controller } from 'react-hook-form'
+import { AlertCircle } from 'lucide-react'
 
 function SelectController({
 	name = '',
 	control,
-	type = '',
 	label = '',
 	options = [],
 	rules = {},
 	errors = {},
 	...rest
 }) {
+	if (!control) return null;
+
+	const hasError = !!errors?.[name];
+
 	return (
-		<div>
-			<label className="block text-sm font-medium text-gray-700 mb-2">{label || ''}</label>
+		<div className="mb-5">
+			{label && (
+				<label htmlFor={name} className="block text-sm font-medium text-gray-800 mb-1">
+					{label}
+				</label>
+			)}
+
 			<Controller
 				key={name}
 				name={name}
 				control={control}
 				rules={rules}
-				render={({ field: { onChange, onBlur, value, ref }, fieldState, formState }) => {
-					return (
-						<select
-							{...rest}
-							onChange={onChange}
-							onBlur={onBlur}
-							value={value}
-							ref={ref}
-							className="mt-1 block w-full border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-						>
-							<option value={''}>Select...</option>
-							{options.map((op) => {
-								return (
-									<option key={op.value}>
-										{op.label}
-									</option>
-								)
-							})}
-						</select>
-					)
-				}}
+				render={({ field: { onChange, onBlur, value, ref } }) => (
+					<select
+						{...rest}
+						id={name}
+						onChange={onChange}
+						onBlur={onBlur}
+						value={value ?? ''}
+						ref={ref}
+						className={`w-full px-3 py-2 border text-sm rounded-md shadow-sm focus:outline-none transition
+              ${hasError
+								? 'border-red-500 focus:border-red-500 focus:ring-red-500'
+								: 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
+							}`}
+					>
+						<option value="">Select...</option>
+						{options.map((op) => (
+							<option key={op.value} value={op.value}>
+								{op.label}
+							</option>
+						))}
+					</select>
+				)}
 			/>
-			{errors?.[name] ? (
-				<span style={{color: '#ee3425', fontSize: '12px'}}>{errors?.[name]?.message || 'error'}</span>
-			): null}
+
+			{hasError && (
+				<p className="mt-1 flex items-center text-sm text-red-600">
+					<AlertCircle className="w-4 h-4 mr-1" />
+					{errors[name]?.message || 'This field is required'}
+				</p>
+			)}
 		</div>
 	)
 }
