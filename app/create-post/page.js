@@ -9,36 +9,39 @@ const controls = [
 	{
 		name: 'post_caption',
 		type: 'input',
-		label: 'Add Caption for the post'
+		label: 'Add Caption for the post',
+		rules: {
+			required: 'This is Required',
+			maxLength: 256,
+		}
+	},
+	{
+		name: 'location',
+		type: 'select',
+		label: 'Add Location',
+		options: [
+			{ label: 'Mumbai, City of Dreams', value: 'mumbai' },
+			{ label: 'Pune, Maharashtra', value: 'pune' }
+		],
 	}
 ]
 
 function CreatePostPage() {
-	const { handleSubmit, control } = useForm();
+	const { handleSubmit, control, formState: { errors } } = useForm();
 
 	const onSubmit = (data) => {
-		console.log(data);
+		console.log({ data });
+		console.log({ errors });
 	};
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)} className="max-w-2xl mx-auto p-4">
 			<h1 className="text-2xl font-bold mb-6">Create New Post</h1>
 
-			{/* Direct test of InputController */}
-			<InputController
-				name="direct_test"
-				control={control}
-				type="text"
-				label="Direct Test Input"
-			/>
-
 			{controls.map((controlItem) => {
-				console.log('Control item:', controlItem);
 				const Element = getController(controlItem?.type);
-				console.log('Element:', Element);
 
 				if (!Element) {
-					console.log('No element found');
 					return null;
 				}
 
@@ -47,6 +50,7 @@ function CreatePostPage() {
 						key={controlItem.name} 
 						control={control} 
 						{...controlItem}
+						errors={errors}
 					/>
 				)
 			})}

@@ -8,9 +8,11 @@ function InputController({
 	control,
 	type = 'text',
 	label = '',
+	rules = {},
+	errors = {},
+	...rest
 }) {
 	if (!control) {
-		console.log('No control provided to InputController');
 		return null;
 	}
 
@@ -21,20 +23,25 @@ function InputController({
 				key={name}
 				name={name}
 				control={control}
+				rules={rules}
 				render={({ field: { onChange, onBlur, value, ref } }) => {
 					return (
 						<input
+							{...rest}
 							name={name}
 							type={type}
 							onChange={onChange}
 							onBlur={onBlur}
 							value={value || ''}
 							ref={ref}
-							className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+							className={`mt-1 block w-full border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm`}
 						/>
 					)
 				}}
 			/>
+			{errors?.[name] ? (
+				<span style={{color: '#ee3425', fontSize: '12px'}}>{errors?.[name]?.message || 'error'}</span>
+			): null}
 		</div>
 	)
 }
