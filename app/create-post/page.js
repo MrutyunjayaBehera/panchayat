@@ -2,44 +2,17 @@
 
 import { getController } from '@/utils/getController';
 import React from 'react';
-import { useForm } from 'react-hook-form';
-import { InputController } from '@/components/form';
+import useCreatePost from './hooks/useCreatePost';
 
-const controls = [
-	{
-		name: 'post_caption',
-		type: 'input',
-		label: 'Add Caption for the post',
-		rules: {
-			required: 'This is Required',
-			maxLength: 256,
-		}
-	},
-	{
-		name: 'location',
-		type: 'select',
-		label: 'Add Location',
-		options: [
-			{ label: 'Mumbai, City of Dreams', value: 'mumbai' },
-			{ label: 'Pune, Maharashtra', value: 'pune' }
-		],
-	},
-	{
-		name: 'post_picture',
-		type: 'file',
-		label: 'Upload Picture',
-		accept: '*',
-		multiple: true
-	}
-]
 
 function CreatePostPage() {
-	const { handleSubmit, control, formState: { errors } } = useForm();
-
-	const onSubmit = (data) => {
-		console.log({ data });
-		console.log({ errors });
-	};
+	const {
+		handleSubmit,
+		onSubmit,
+		controls,
+		control,
+		errors
+	} = useCreatePost();
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)} className="max-w-2xl mx-auto p-4">

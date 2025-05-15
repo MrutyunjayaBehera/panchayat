@@ -7,15 +7,15 @@ export default function SideNav() {
     const { user } = useAuth();
 
     const menuItems = [
-        {
-            icon: '/globe.svg',
-            label: 'News Feed',
-            href: '/'
-        },
+        // {
+        //     icon: '/globe.svg',
+        //     label: 'News Feed',
+        //     href: '/'
+        // },
         {
             icon: '/window.svg',
-            label: 'Events',
-            href: '/events'
+            label: 'Messages',
+            href: '/messages'
         },
         {
             icon: '/file.svg',

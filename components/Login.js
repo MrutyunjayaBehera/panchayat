@@ -11,7 +11,7 @@ function Login() {
 
     useEffect(() => {
         if (user) {
-            router.replace('/');
+            router.replace('/posts');
         }
     }, [user, router]);
 
